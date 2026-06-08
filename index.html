@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>onUI — Investor Brief</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F8F9FA; --card:#FFFFFF; --border:#E4E7EB;
+    --ink:#111316; --body:#2D3135; --muted:#62686F; --faint:#9CA3AF;
+    --accent:#E05375; --accent-deep:#C13D5E; --accent-light:#FDF2F4;
+    --ink-panel:#14161A;
+    --shadow:0 1px 3px rgba(0,0,0,.02),0 8px 26px rgba(0,0,0,.04);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--body);font-family:'Inter',-apple-system,sans-serif;
+    font-size:14px;line-height:1.55;letter-spacing:-.01em;padding:52px 20px 64px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:30px 32px;box-shadow:var(--shadow);
+    opacity:0;transform:translateY(10px);animation:rise .55s cubic-bezier(.2,.7,.3,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .panel:nth-child(2){animation-delay:.04s}.panel:nth-child(3){animation-delay:.08s}
+  .panel:nth-child(4){animation-delay:.12s}.panel:nth-child(5){animation-delay:.16s}
+  .panel:nth-child(6){animation-delay:.2s}.panel:nth-child(7){animation-delay:.24s}
+
+  .tag{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.13em;color:var(--accent);margin-bottom:14px;display:block}
+  .tag.grey{color:var(--faint)}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--border)}
+  .logo{font-size:21px;font-weight:900;letter-spacing:-.04em;color:var(--ink)}.logo span{color:var(--accent)}
+  .pill{font-size:11px;font-weight:700;color:var(--ink);background:#EAECEF;padding:5px 13px;border-radius:20px}
+
+  .hero{background:linear-gradient(165deg,#fff 0%,var(--accent-light) 130%);border-color:rgba(224,83,117,.22)}
+  .hero h1{font-size:31px;font-weight:800;line-height:1.2;color:var(--ink);letter-spacing:-.03em;max-width:20ch}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{font-size:15.5px;color:var(--body);line-height:1.55;margin-top:15px;max-width:56ch}
+  .hero p b{color:var(--ink);font-weight:600}
+
+  .one-line{font-size:15px;color:var(--ink);line-height:1.5;margin-bottom:4px}
+  .one-line b{color:var(--accent);font-weight:600}
+  .body-line{font-size:13.5px;color:var(--muted);line-height:1.55;margin-top:9px;max-width:74ch}
+  .body-line b{color:var(--ink);font-weight:600}
+  .sol-chips{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .sol-chip{flex:1;min-width:170px;background:var(--accent-light);border:1px solid rgba(224,83,117,.22);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--body);line-height:1.4}
+  .sol-chip b{display:block;color:var(--accent);font-weight:800;font-size:10px;letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+
+  @keyframes streamFlow{to{stroke-dashoffset:-20}}
+  .anim{stroke-dasharray:5 4;stroke-linecap:round;fill:none;animation:streamFlow 1s linear infinite}
+  @keyframes streamDown{to{background-position:0 8px}}
+
+  /* ---- DIAGRAM 1: composability pipeline ---- */
+  .diag{background:#FAFAFB;border:1px solid var(--border);border-radius:12px;padding:26px 20px 16px;margin-top:18px;overflow:hidden}
+  .pipe{display:flex;align-items:center;width:100%}
+  .conn{flex:1;min-width:26px;height:120px;display:block}
+  .conn.xs{max-width:34px}
+  .m-cap,.m-conn{display:none}
+
+  .app{width:130px;flex-shrink:0;background:#fff;border:1px solid #D1D5DB;border-radius:8px;overflow:hidden}
+  .app-h{background:#F3F4F6;border-bottom:1px solid #E5E7EB;padding:5px 8px;display:flex;align-items:center;gap:4px}
+  .dot{width:5px;height:5px;border-radius:50%}
+  .app-hl{font-size:7px;font-weight:800;color:#6B7280;letter-spacing:.05em;text-transform:uppercase;margin-left:3px}
+  .app-b{padding:7px;display:flex;flex-direction:column;gap:5px}
+  .z{border:1px solid #E5E7EB;border-radius:3px;background:#FAFAFA;padding:4px 5px}
+  .zl{font-size:6px;font-weight:800;color:#AEB3BA;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+  .frow{display:flex;gap:3px}.f{flex:1;height:8px;border:1px solid #E9EBEE;border-radius:2px;background:#fff}
+  .bars{display:flex;align-items:flex-end;gap:2px;height:16px}.bar{width:7px;border-radius:1px 1px 0 0;background:#E5E7EB}
+  .zrow{display:flex;gap:5px}.zrow .z{flex:1}
+
+  .grid9{width:128px;flex-shrink:0;display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+  .cube{height:36px;border:1px solid #D1D5DB;border-radius:4px;background:#fff;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:3px}
+  .cl{font-size:6px;font-weight:800;letter-spacing:.03em;color:#9CA3AF;text-transform:uppercase;line-height:1}
+  .ic{width:14px;height:14px;display:block;fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round;stroke:#9CA3AF}
+
+  .cube.lit{border-color:var(--accent);background:rgba(224,83,117,.07)}
+  .cube.lit .cl{color:var(--accent)}.cube.lit .ic{stroke:var(--accent)}
+  .cube.dim{border-color:#ECEEF0;background:#F7F8F9;opacity:.4}.cube.dim .ic{stroke:#C9CDD2}
+
+  .brain{flex-shrink:0;display:flex;flex-direction:column;align-items:center}
+  .brain .b{background:var(--accent-light);border:2px solid var(--accent);border-radius:40px;width:58px;height:120px;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--accent);letter-spacing:-.02em}
+
+  .screen{width:118px;flex-shrink:0;background:#fff;border:2px solid var(--accent);border-radius:8px;overflow:hidden}
+  .screen-h{background:rgba(224,83,117,.08);border-bottom:1px solid rgba(224,83,117,.2);padding:4px 7px}
+  .screen-hl{font-size:6.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+  .screen-b{padding:6px;display:grid;grid-template-columns:1fr 1fr;gap:4px}
+  .scube{height:30px;border:1px solid rgba(224,83,117,.35);border-radius:3px;background:rgba(224,83,117,.06);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+  .scube .cl{color:rgba(193,61,94,.85)}.scube .ic{stroke:rgba(193,61,94,.85);width:12px;height:12px}
+
+  .user{width:44px;height:44px;background:#fff;border:1.5px solid var(--ink);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .user svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.5}
+
+  .caps{display:flex;margin-top:12px;font-size:9.5px;font-weight:800;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
+  .cap{text-align:center}.cap.dark{color:var(--ink)}.sp{flex:1}
+
+  /* ---- DIAGRAM 2: data stays (card-based, same vocabulary as the others) ---- */
+  .dz{display:flex;align-items:stretch;margin-top:18px}
+  .dz-walls{flex:1;min-width:0;background:#FAFBFC;border:1px solid var(--border);
+    border-right:2px dashed rgba(224,83,117,.5);border-radius:12px 0 0 12px;padding:16px 18px}
+  .dz-wl{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+  .dz-row{display:flex;align-items:center;gap:10px}
+  .dz-pill{flex-shrink:0;background:var(--accent-light);border:2px solid var(--accent);border-radius:30px;
+    padding:0 15px;height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+  .dz-pill b{font-size:13px;font-weight:900;color:var(--accent);letter-spacing:-.02em}
+  .dz-pill span{font-size:7px;font-weight:800;color:var(--accent-deep);text-transform:uppercase;letter-spacing:.05em}
+  .dz-arrow{flex-shrink:0;width:30px;height:24px}
+  .dz-map{flex:1;min-width:0;background:#fff;border:1px solid var(--border);border-radius:9px;padding:8px 10px 4px}
+  .dz-map .h{font-size:8px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
+  .dz-map svg{width:100%;height:72px;display:block}
+  .dz-data{display:flex;align-items:center;gap:9px;margin-top:11px;padding:9px 12px;background:#fff;border:1px solid var(--border);border-radius:9px}
+  .dz-data .ic{width:18px;height:18px;flex-shrink:0;stroke:var(--accent);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+  .dz-data .t{font-size:11.5px;font-weight:700;color:var(--ink)}
+  .dz-data .s{font-size:10.5px;color:var(--muted);margin-left:2px}
+  .dz-data .stay{margin-left:auto;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);background:var(--accent-light);padding:4px 9px;border-radius:5px}
+  .dz-cross{flex-shrink:0;width:152px;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:0 8px}
+  .dz-seg .l{height:18px}.dz-seg .l svg{width:100%;height:100%;display:block}
+  .dz-seg .c{font-size:9px;font-weight:700;line-height:1.25;text-align:center;margin-top:3px}
+  .dz-seg .c.yes{color:var(--accent-deep)}.dz-seg .c.no{color:var(--faint)}
+  .dz-model{flex-shrink:0;width:130px;background:var(--ink-panel);border-radius:0 12px 12px 0;padding:18px 16px;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:3px}
+  .dz-model .t{font-size:13.5px;font-weight:800;color:#fff}
+  .dz-model .s{font-size:10px;color:#9AA0A8;line-height:1.4}
+  .dz-model .tag2{margin-top:7px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#F19BB1}
+
+  /* ---- DIAGRAM 3: persona fan ---- */
+  .fan-src{display:flex;flex-direction:column;align-items:center;margin-top:20px}
+  .fan-pill{background:var(--accent-light);border:2px solid var(--accent);border-radius:22px;padding:8px 22px;
+    font-size:13px;font-weight:800;color:var(--accent)}
+  .fan-lines{width:100%;height:34px;display:block;margin:2px 0 8px}
+  .fan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .pcard{border:1px solid var(--border);border-radius:11px;background:#fff;padding:16px 12px 15px;
+    display:flex;flex-direction:column;align-items:center;gap:8px;box-shadow:var(--shadow)}
+  .pav{width:36px;height:36px;border-radius:50%;background:var(--accent-light);border:1px solid rgba(224,83,117,.3);
+    display:flex;align-items:center;justify-content:center}
+  .pav svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .pname{font-size:13.5px;font-weight:800;color:var(--ink)}
+  .pmini{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;width:100%;max-width:74px}
+  .pcell{aspect-ratio:1/1;border-radius:3px;background:#F1F2F4;border:1px solid #E8EAED}
+  .pcell.on{background:rgba(224,83,117,.16);border-color:var(--accent)}
+  .pchip{font-size:9.5px;font-weight:700;color:var(--muted);text-align:center;line-height:1.4}
+
+  /* ---- traction / facts ---- */
+  .deals{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .deal{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 14px}
+  .deal-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+  .deal-c{font-size:13.5px;font-weight:800;color:var(--ink)}
+  .deal-b{font-size:8.5px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap}
+  .b-poc{color:#fff;background:var(--accent)}.b-talk{color:var(--accent-deep);background:var(--accent-light)}.b-pipe{color:var(--muted);background:#EAECEF}
+  .deal-m{font-size:11.5px;color:var(--muted);line-height:1.4}
+
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .fact .n{font-size:25px;font-weight:900;letter-spacing:-.03em;color:var(--ink);line-height:1.1}
+  .fact .l{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;margin:6px 0 5px}
+  .fact .d{font-size:11.5px;color:var(--muted);line-height:1.45}
+
+  .team{display:flex;gap:26px;flex-wrap:wrap}
+  .tmember .tn{font-size:13.5px;font-weight:800;color:var(--ink)}
+  .tmember .tr{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;margin:1px 0 3px}
+  .tmember .tb{font-size:11.5px;color:var(--muted);line-height:1.4;max-width:24ch}
+
+  .cta{background:linear-gradient(150deg,#fff 0%,var(--accent-light) 140%);border-color:rgba(224,83,117,.25);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .cta .big{font-size:18px;font-weight:800;color:var(--ink);letter-spacing:-.02em}
+  .cta .small{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .cta a{font-size:13px;font-weight:700;color:#fff;background:var(--ink);padding:12px 22px;border-radius:10px;text-decoration:none;white-space:nowrap}
+
+  .foot{display:flex;justify-content:space-between;align-items:center;padding-top:4px;font-size:12.5px;color:var(--muted)}
+  .foot b{color:var(--ink);font-weight:700}
+
+  @media(max-width:780px){
+    body{padding:34px 14px 48px}.panel{padding:24px}
+    .grid-2,.deals,.facts{grid-template-columns:1fr}
+    .pipe{flex-direction:column}
+    .conn,.caps{display:none!important}
+    .app,.grid9,.screen{width:100%;max-width:230px}
+    .brain .b{width:130px;height:54px;border-radius:30px}
+    .fan-grid{grid-template-columns:1fr 1fr}.fan-lines{display:none}
+    .dz{flex-direction:column}
+    .dz-walls{border-right:1px solid var(--border);border-bottom:2px dashed rgba(224,83,117,.5);border-radius:12px 12px 0 0}
+    .dz-cross{width:100%;flex-direction:row;gap:18px;padding:14px 6px}.dz-seg{flex:1}
+    .dz-model{width:100%;border-radius:0 0 12px 12px}
+    .m-cap{display:block;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);text-align:center;margin-bottom:7px}
+    .m-cap.muted{color:var(--muted)}
+    .m-conn{display:block;width:2px;height:24px;margin:5px 0;
+      background-image:linear-gradient(var(--c,#D1D5DB) 55%,transparent 45%);background-size:2px 8px;background-repeat:repeat-y;animation:streamDown .9s linear infinite}
+  }
+  @media(max-width:440px){.fan-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="nav">
+    <div class="logo">on<span>UI</span></div>
+    <div class="pill">Seed Brief · 2026</div>
+  </div>
+
+  <!-- HERO -->
+  <div class="panel hero">
+    <span class="tag">UI for systems that can't move to the cloud</span>
+    <h1>Any screen, on the backend you already have <em>your data never leaves.</em></h1>
+    <p>onUI installs as <b>one SDK</b> and turns your existing product into building blocks. It reads what each user needs and assembles the right screen for them <b>live, no code, nothing migrated.</b> Built for the teams cloud tools lock out: security, health, finance.</p>
+  </div>
+
+  <!-- PROBLEM -->
+  <div class="panel">
+    <span class="tag">The Problem</span>
+    <div class="one-line">Shipping UI is the bottleneck. <b>Every new screen, report, or per-customer view waits weeks in an engineering queue.</b></div>
+    <div class="body-line">The modern tools that make this instant cloud CMSs and AI app builders only work if your data and backend live in <b>their</b> cloud. That rules out the teams moving the most sensitive data: security, health, finance, and serious B2B products. The companies that most need to move fast are the ones still building every screen by hand.</div>
+  </div>
+
+  <!-- SOLUTION / HOW IT WORKS -->
+  <div class="panel">
+    <span class="tag">The Solution</span>
+    <div class="one-line">Install once. <b>onUI maps your product into blocks, reads each user, and builds the screen they need.</b></div>
+    <div class="body-line">onUI is one SDK you add to your own app. It reads your existing product every screen, API, and data model and turns it into reusable building blocks. From then on anyone can ask, in plain language, for a new dashboard, report, or per-customer view, and onUI builds it from those blocks and places it <b>live in the product</b> editing existing pages or creating new ones, with no extra code and no deploy. Because the agent runs inside your product and is fit to your system, what it builds actually works with your real data and permissions.</div>
+
+    <div class="diag">
+      <div class="pipe">
+
+        <!-- 1: your product -->
+        <div class="m-cap">Your product</div>
+        <div class="app">
+          <div class="app-h"><span class="dot" style="background:#F87171"></span><span class="dot" style="background:#FBBF24"></span><span class="dot" style="background:#34D399"></span><span class="app-hl">Your app</span></div>
+          <div class="app-b">
+            <div class="z"><div class="zl">Page</div><div class="frow"><div class="f" style="max-width:55%"></div><div class="f" style="max-width:30%"></div><div class="f" style="max-width:30%"></div></div></div>
+            <div class="zrow">
+              <div class="z"><div class="zl">List</div><div style="display:flex;flex-direction:column;gap:2px"><div class="f"></div><div class="f"></div></div></div>
+              <div class="z"><div class="zl">Data</div><div class="bars"><div class="bar" style="height:7px"></div><div class="bar" style="height:13px"></div><div class="bar" style="height:9px"></div><div class="bar" style="height:16px"></div></div></div>
+            </div>
+            <div class="z"><div class="zl">Your data stays inside</div></div>
+          </div>
+        </div>
+
+        <div class="m-conn" style="--c:#D1D5DB"></div>
+        <svg class="conn" preserveAspectRatio="none" viewBox="0 0 80 120">
+          <path class="anim" d="M0 35 C40 35,40 60,80 60" stroke="#D1D5DB" stroke-width="1.2"/>
+          <path class="anim" style="animation-delay:-.4s" d="M0 60 L80 60" stroke="#D1D5DB" stroke-width="1.2"/>
+          <path class="anim" style="animation-delay:-.8s" d="M0 85 C40 85,40 60,80 60" stroke="#D1D5DB" stroke-width="1.2"/>
+        </svg>
+
+        <!-- 2: blocks -->
+        <div class="m-cap">Mapped to blocks</div>
+        <div class="grid9">
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><rect x="2.5" y="3" width="11" height="10" rx="1.2"/><line x1="2.5" y1="6.2" x2="13.5" y2="6.2"/></svg><span class="cl">Screens</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><rect x="3" y="3.5" width="10" height="9" rx="1"/><line x1="3" y1="6.5" x2="13" y2="6.5"/><line x1="3" y1="9.5" x2="13" y2="9.5"/><line x1="6.3" y1="3.5" x2="6.3" y2="12.5"/></svg><span class="cl">Tables</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><line x1="3" y1="13" x2="13" y2="13"/><rect x="4" y="8" width="2" height="5"/><rect x="7" y="5" width="2" height="8"/><rect x="10" y="9.5" width="2" height="3.5"/></svg><span class="cl">Charts</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><rect x="3" y="4" width="10" height="3" rx="1"/><rect x="3" y="9" width="7" height="3" rx="1"/></svg><span class="cl">Forms</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><path d="M8.5 2.5 L4 9 H7.5 L7 13.5 L12 7 H8 Z"/></svg><span class="cl">Actions</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><rect x="4" y="2.5" width="8" height="11" rx="1"/><line x1="6" y1="6" x2="10" y2="6"/><line x1="6" y1="8.5" x2="10" y2="8.5"/><line x1="6" y1="11" x2="8.5" y2="11"/></svg><span class="cl">Reports</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><path d="M3 4 H13 L9.5 8.5 V12 L6.5 13 V8.5 Z"/></svg><span class="cl">Filters</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><ellipse cx="8" cy="4" rx="4.5" ry="1.8"/><path d="M3.5 4 V12 C3.5 13 5.5 13.8 8 13.8 C10.5 13.8 12.5 13 12.5 12 V4"/></svg><span class="cl">Records</span></div>
+          <div class="cube"><svg class="ic" viewBox="0 0 16 16"><rect x="4" y="7" width="8" height="6" rx="1"/><path d="M5.5 7 V5 C5.5 3.6 6.6 2.7 8 2.7 C9.4 2.7 10.5 3.6 10.5 5 V7"/></svg><span class="cl">Access</span></div>
+        </div>
+
+        <div class="m-conn" style="--c:#9CA3AF"></div>
+        <svg class="conn" preserveAspectRatio="none" viewBox="0 0 80 120">
+          <path class="anim" d="M0 28 C40 28,40 60,80 60" stroke="#9CA3AF" stroke-width="1.2"/>
+          <path class="anim" style="animation-delay:-.33s" d="M0 60 L80 60" stroke="#9CA3AF" stroke-width="1.2"/>
+          <path class="anim" style="animation-delay:-.66s" d="M0 92 C40 92,40 60,80 60" stroke="#9CA3AF" stroke-width="1.2"/>
+        </svg>
+
+        <!-- 3: onUI reads -->
+        <div class="m-cap">onUI reads each user</div>
+        <div class="brain"><div class="b">onUI</div></div>
+
+        <div class="m-conn" style="--c:#E05375"></div>
+        <svg class="conn" preserveAspectRatio="none" viewBox="0 0 80 120">
+          <path class="anim" d="M0 60 C40 60,40 26,80 20" stroke="#E05375" stroke-width="1.2"/>
+          <path class="anim" style="animation-delay:-.33s" d="M0 60 L80 60" stroke="#E05375" stroke-width="1.2"/>
+          <path class="anim" style="animation-delay:-.66s" d="M0 60 C40 60,40 94,80 100" stroke="#E05375" stroke-width="1.2"/>
+        </svg>
+
+        <!-- 4: picks what fits -->
+        <div class="m-cap">Picks what fits</div>
+        <div class="grid9">
+          <div class="cube lit"><svg class="ic" viewBox="0 0 16 16"><rect x="2.5" y="3" width="11" height="10" rx="1.2"/><line x1="2.5" y1="6.2" x2="13.5" y2="6.2"/></svg><span class="cl">Screens</span></div>
+          <div class="cube lit"><svg class="ic" viewBox="0 0 16 16"><rect x="3" y="3.5" width="10" height="9" rx="1"/><line x1="3" y1="6.5" x2="13" y2="6.5"/><line x1="3" y1="9.5" x2="13" y2="9.5"/><line x1="6.3" y1="3.5" x2="6.3" y2="12.5"/></svg><span class="cl">Tables</span></div>
+          <div class="cube lit"><svg class="ic" viewBox="0 0 16 16"><line x1="3" y1="13" x2="13" y2="13"/><rect x="4" y="8" width="2" height="5"/><rect x="7" y="5" width="2" height="8"/><rect x="10" y="9.5" width="2" height="3.5"/></svg><span class="cl">Charts</span></div>
+          <div class="cube dim"><svg class="ic" viewBox="0 0 16 16"><rect x="3" y="4" width="10" height="3" rx="1"/><rect x="3" y="9" width="7" height="3" rx="1"/></svg><span class="cl">Forms</span></div>
+          <div class="cube dim"><svg class="ic" viewBox="0 0 16 16"><path d="M8.5 2.5 L4 9 H7.5 L7 13.5 L12 7 H8 Z"/></svg><span class="cl">Actions</span></div>
+          <div class="cube lit"><svg class="ic" viewBox="0 0 16 16"><rect x="4" y="2.5" width="8" height="11" rx="1"/><line x1="6" y1="6" x2="10" y2="6"/><line x1="6" y1="8.5" x2="10" y2="8.5"/><line x1="6" y1="11" x2="8.5" y2="11"/></svg><span class="cl">Reports</span></div>
+          <div class="cube dim"><svg class="ic" viewBox="0 0 16 16"><path d="M3 4 H13 L9.5 8.5 V12 L6.5 13 V8.5 Z"/></svg><span class="cl">Filters</span></div>
+          <div class="cube lit"><svg class="ic" viewBox="0 0 16 16"><ellipse cx="8" cy="4" rx="4.5" ry="1.8"/><path d="M3.5 4 V12 C3.5 13 5.5 13.8 8 13.8 C10.5 13.8 12.5 13 12.5 12 V4"/></svg><span class="cl">Records</span></div>
+          <div class="cube dim"><svg class="ic" viewBox="0 0 16 16"><rect x="4" y="7" width="8" height="6" rx="1"/><path d="M5.5 7 V5 C5.5 3.6 6.6 2.7 8 2.7 C9.4 2.7 10.5 3.6 10.5 5 V7"/></svg><span class="cl">Access</span></div>
+        </div>
+
+        <div class="m-conn" style="--c:#E05375"></div>
+        <svg class="conn" preserveAspectRatio="none" viewBox="0 0 70 120">
+          <path class="anim" d="M0 20 C35 20,35 60,70 60" stroke="#E05375" stroke-width="1.2" opacity=".55"/>
+          <path class="anim" style="animation-delay:-.33s" d="M0 60 L70 60" stroke="#E05375" stroke-width="1.2" opacity=".55"/>
+          <path class="anim" style="animation-delay:-.66s" d="M0 100 C35 100,35 60,70 60" stroke="#E05375" stroke-width="1.2" opacity=".55"/>
+        </svg>
+
+        <!-- 5: builds the screen -->
+        <div class="m-cap">Builds the screen</div>
+        <div class="screen">
+          <div class="screen-h"><span class="screen-hl">Researcher view</span></div>
+          <div class="screen-b">
+            <div class="scube"><svg class="ic" viewBox="0 0 16 16"><line x1="3" y1="13" x2="13" y2="13"/><rect x="4" y="8" width="2" height="5"/><rect x="7" y="5" width="2" height="8"/><rect x="10" y="9.5" width="2" height="3.5"/></svg><span class="cl">Charts</span></div>
+            <div class="scube"><svg class="ic" viewBox="0 0 16 16"><rect x="4" y="2.5" width="8" height="11" rx="1"/><line x1="6" y1="6" x2="10" y2="6"/><line x1="6" y1="8.5" x2="10" y2="8.5"/></svg><span class="cl">Reports</span></div>
+            <div class="scube"><svg class="ic" viewBox="0 0 16 16"><ellipse cx="8" cy="4" rx="4.5" ry="1.8"/><path d="M3.5 4 V12 C3.5 13 5.5 13.8 8 13.8 C10.5 13.8 12.5 13 12.5 12 V4"/></svg><span class="cl">Records</span></div>
+            <div class="scube"><svg class="ic" viewBox="0 0 16 16"><rect x="3" y="3.5" width="10" height="9" rx="1"/><line x1="3" y1="6.5" x2="13" y2="6.5"/><line x1="6.3" y1="3.5" x2="6.3" y2="12.5"/></svg><span class="cl">Tables</span></div>
+          </div>
+        </div>
+
+        <div class="m-conn" style="--c:#F0B6C5"></div>
+        <svg class="conn xs" preserveAspectRatio="none" viewBox="0 0 34 120">
+          <path class="anim" d="M0 60 L34 60" stroke="#E05375" stroke-width="1.2" opacity=".35"/>
+        </svg>
+
+        <div class="m-cap muted">The user</div>
+        <div class="user"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21 C4 16 7.5 14 12 14 C16.5 14 20 16 20 21"/></svg></div>
+      </div>
+
+      <div class="caps">
+        <div class="cap" style="width:130px;flex-shrink:0">Your product</div><div class="sp"></div>
+        <div class="cap dark" style="width:128px;flex-shrink:0">Mapped to blocks</div><div class="sp"></div>
+        <div class="cap dark" style="width:58px;flex-shrink:0">Reads user</div><div class="sp"></div>
+        <div class="cap dark" style="width:128px;flex-shrink:0">Picks what fits</div><div class="sp"></div>
+        <div class="cap dark" style="width:118px;flex-shrink:0">Builds the screen</div>
+        <div style="width:78px;flex-shrink:0"></div>
+      </div>
+    </div>
+
+    <div class="sol-chips">
+      <div class="sol-chip"><b>Edit, not just generate</b>onUI changes your existing pages not only spins up new ones from a blank prompt.</div>
+      <div class="sol-chip"><b>Any backend, nothing migrates</b>Works on the system you already run. No re-platforming, no lock-in.</div>
+      <div class="sol-chip"><b>Live at runtime</b>Screens render the moment they're built no extra code, no deploy, no release cycle.</div>
+    </div>
+  </div>
+
+  <!-- WHY THE AGENT IS DIFFERENT / DATA NEVER LEAVES -->
+  <div class="panel">
+    <span class="tag">Why our agent is different and why regulated buyers say yes</span>
+    <div class="one-line">onUI reasons over a live <b>map of your system</b> entities, actions, schema. The model sees the map, never your data.</div>
+
+    <div class="dz">
+
+      <!-- inside your walls -->
+      <div class="dz-walls">
+        <div class="dz-wl">Inside your walls · on-prem or your cloud</div>
+        <div class="dz-row">
+          <div class="dz-pill"><b>onUI</b><span>reasons over</span></div>
+          <svg class="dz-arrow" viewBox="0 0 30 24" preserveAspectRatio="none">
+            <path class="anim" d="M0 12 H24" stroke="var(--accent)" stroke-width="1.4"/>
+            <path d="M22 7 l6 5 l-6 5" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="dz-map">
+            <div class="h">Map of your system</div>
+            <svg viewBox="0 0 230 72" preserveAspectRatio="xMidYMid meet">
+              <!-- links -->
+              <g opacity="0.8">
+                <path class="anim" d="M115 36 L33 13" stroke="var(--accent)" stroke-width="1.1"/>
+                <path class="anim" style="animation-delay:-.3s" d="M115 36 L197 13" stroke="var(--accent)" stroke-width="1.1"/>
+                <path class="anim" style="animation-delay:-.6s" d="M115 36 L33 59" stroke="var(--accent)" stroke-width="1.1"/>
+                <path class="anim" style="animation-delay:-.9s" d="M115 36 L197 59" stroke="var(--accent)" stroke-width="1.1"/>
+              </g>
+              <!-- hub -->
+              <rect x="92" y="27" width="46" height="18" rx="6" fill="#FDF2F4" stroke="var(--accent)" stroke-width="1.4"/>
+              <text x="115" y="39" font-size="8.5" font-weight="800" fill="#C13D5E" text-anchor="middle" font-family="Inter,sans-serif">Schema</text>
+              <!-- satellite entities -->
+              <g font-family="Inter,sans-serif" font-size="8" font-weight="700" text-anchor="middle">
+                <rect x="6" y="5" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="33" y="16.5" fill="#62686F">Users</text>
+                <rect x="170" y="5" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="197" y="16.5" fill="#62686F">Orders</text>
+                <rect x="6" y="50" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="33" y="61.5" fill="#62686F">Records</text>
+                <rect x="170" y="50" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="197" y="61.5" fill="#62686F">Reports</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <div class="dz-data">
+          <svg class="ic" viewBox="0 0 16 16"><ellipse cx="8" cy="4" rx="4.5" ry="1.8"/><path d="M3.5 4 V12 C3.5 13 5.5 13.8 8 13.8 C10.5 13.8 12.5 13 12.5 12 V4"/><path d="M3.5 8 C3.5 9 5.5 9.8 8 9.8 C10.5 9.8 12.5 9 12.5 8"/></svg>
+          <span class="t">Your data</span><span class="s">records · PII · content</span>
+          <span class="stay">never leaves</span>
+        </div>
+      </div>
+
+      <!-- what crosses the wall -->
+      <div class="dz-cross">
+        <div class="dz-seg">
+          <div class="l"><svg viewBox="0 0 150 18" preserveAspectRatio="none">
+            <path class="anim" d="M0 9 H140" stroke="var(--accent)" stroke-width="1.5"/>
+            <path d="M138 4 l6 5 l-6 5" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></div>
+          <div class="c yes">schema · structure ·<br>how data is used</div>
+        </div>
+        <div class="dz-seg">
+          <div class="l"><svg viewBox="0 0 150 18" preserveAspectRatio="none">
+            <line x1="0" y1="9" x2="58" y2="9" stroke="#C9CDD2" stroke-width="1.5"/>
+            <circle cx="73" cy="9" r="9" fill="none" stroke="#C9CDD2" stroke-width="1.5"/>
+            <line x1="67" y1="3" x2="79" y2="15" stroke="#C9CDD2" stroke-width="1.5"/>
+          </svg></div>
+          <div class="c no">raw data<br>never crosses</div>
+        </div>
+      </div>
+
+      <!-- the model -->
+      <div class="dz-model">
+        <div class="t">The model</div>
+        <div class="s">your LLM, self-hosted<br>or ours</div>
+        <div class="tag2">sees shape, not data</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ONE PRODUCT, EVERY ROLE -->
+  <div class="panel">
+    <span class="tag">The payoff — one product, an experience per role</span>
+    <div class="fan-src"><div class="fan-pill">Same blocks</div></div>
+    <svg class="fan-lines" viewBox="0 0 100 34" preserveAspectRatio="none">
+      <path class="anim" d="M50 0 L12.5 34" stroke="var(--accent)" stroke-width="1.3" opacity=".45" vector-effect="non-scaling-stroke"/>
+      <path class="anim" style="animation-delay:-.25s" d="M50 0 L37.5 34" stroke="var(--accent)" stroke-width="1.3" opacity=".45" vector-effect="non-scaling-stroke"/>
+      <path class="anim" style="animation-delay:-.5s" d="M50 0 L62.5 34" stroke="var(--accent)" stroke-width="1.3" opacity=".45" vector-effect="non-scaling-stroke"/>
+      <path class="anim" style="animation-delay:-.75s" d="M50 0 L87.5 34" stroke="var(--accent)" stroke-width="1.3" opacity=".45" vector-effect="non-scaling-stroke"/>
+    </svg>
+    <div class="fan-grid">
+      <div class="pcard">
+        <div class="pav"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.6"/><path d="M3 14 C3 10.5 5.2 9 8 9 C10.8 9 13 10.5 13 14"/></svg></div>
+        <div class="pname">Researcher</div>
+        <div class="pmini"><span class="pcell on"></span><span class="pcell on"></span><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell"></span></div>
+        <div class="pchip">Charts · Reports · Records</div>
+      </div>
+      <div class="pcard">
+        <div class="pav"><svg viewBox="0 0 16 16"><rect x="3" y="4" width="2.6" height="8" rx=".6"/><rect x="6.7" y="4" width="2.6" height="5" rx=".6"/><rect x="10.4" y="4" width="2.6" height="6.5" rx=".6"/></svg></div>
+        <div class="pname">Analyst</div>
+        <div class="pmini"><span class="pcell"></span><span class="pcell on"></span><span class="pcell on"></span><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span></div>
+        <div class="pchip">Tables · Filters · Charts</div>
+      </div>
+      <div class="pcard">
+        <div class="pav"><svg viewBox="0 0 16 16"><circle cx="8" cy="5.5" r="2.6"/><path d="M3 14 C3 10.5 5.2 9 8 9 C10.8 9 13 10.5 13 14"/></svg></div>
+        <div class="pname">Customer</div>
+        <div class="pmini"><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell on"></span><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell"></span></div>
+        <div class="pchip">Screens · Forms · Actions</div>
+      </div>
+      <div class="pcard">
+        <div class="pav"><svg viewBox="0 0 16 16"><path d="M8 2.5 L12.5 4 V8 C12.5 10.8 10.5 12.8 8 13.5 C5.5 12.8 3.5 10.8 3.5 8 V4 Z"/><path d="M6 8 L7.4 9.4 L10 6.5"/></svg></div>
+        <div class="pname">Security lead</div>
+        <div class="pmini"><span class="pcell"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell on"></span><span class="pcell on"></span><span class="pcell on"></span></div>
+        <div class="pchip">Access · Records · Charts</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY NOW -->
+  <div class="panel">
+    <span class="tag">Why Now</span>
+    <div class="one-line">Users now expect software to behave like the AI tools they use every day <b>generate what I need, adapt to me, instantly.</b></div>
+    <div class="body-line">After ChatGPT and a wave of build-an-app-in-a-prompt tools, static one-size-fits-all screens feel broken. Buyers feel it from both sides: their users demand tailored, on-demand interfaces, and their own teams expect to ship them in minutes, not sprints. That expectation is now universal but the products holding the most valuable data are the ones that <b>can't</b> reach for a cloud tool to meet it. onUI brings the generate-on-demand experience to exactly those products, and every screen it builds teaches it what each role needs next.</div>
+  </div>
+
+  <!-- TRACTION -->
+  <div class="panel">
+    <span class="tag grey">Traction — design partners &amp; active pilots · pre-revenue, intent to pay</span>
+    <div class="deals">
+      <div class="deal"><div class="deal-h"><span class="deal-c">Pentera</span><span class="deal-b b-poc">Active POC</span></div><div class="deal-m">Cybersecurity shipping UI past a heavy release cycle, on-prem.</div></div>
+      <div class="deal"><div class="deal-h"><span class="deal-c">Sheba Hospital</span><span class="deal-b b-talk">In discussion</span></div><div class="deal-m">Secure reports for researchers, without exposing patient data.</div></div>
+      <div class="deal"><div class="deal-h"><span class="deal-c">AT&amp;T</span><span class="deal-b b-pipe">Exploration</span></div><div class="deal-m">Reuse internal components, cut token waste, feed-driven UI.</div></div>
+      <div class="deal"><div class="deal-h"><span class="deal-c">Binat + inbound</span><span class="deal-b b-pipe">Pipeline</span></div><div class="deal-m">Integrator + inbound SaaS, integrators &amp; agencies.</div></div>
+    </div>
+  </div>
+
+  <!-- FACTS -->
+  <div class="panel">
+    <div class="facts">
+      <div class="fact"><div class="n">$10–100M ARR</div><div class="l">Who we sell to</div><div class="d">Growth-stage software teams in data-sensitive verticals, security, health, fintech, serious B2B.</div></div>
+      <div class="fact"><div class="n">~$30K+ / yr</div><div class="l">Land price · expands by seats &amp; tenants</div><div class="d">Annual SaaS per deployment; on-prem tier available.</div></div>
+      <div class="fact"><div class="n">One install</div><div class="l">10–30 minutes</div><div class="d">Add the SDK once, then edit forever, no migration, no lock-in.</div></div>
+    </div>
+  </div>
+
+  <!-- TEAM -->
+  <div class="panel">
+    <span class="tag">Team</span>
+    <div class="team">
+      <div class="tmember"><div class="tn">Sagi Gleizer</div><div class="tr">CEO</div><div class="tb">Principal SE, F5 &amp; brandlight.ai. Owns product &amp; architecture.</div></div>
+      <div class="tmember"><div class="tn">Itay Mendelawy</div><div class="tr">CBO</div><div class="tb">VP Product at Bit; BlazeMeter (exited to CA, $100M). GTM.</div></div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="panel cta">
+    <div><div class="big">Book a 2-week pilot on your own stack.</div><div class="small">One SDK, your backend, your LLM, your walls.</div></div>
+    <a href="https://onui.ai">Book a pilot →</a>
+  </div>
+
+  <div class="foot"><div>onui.ai</div><div>The backend stays. The data stays. <b>The UI writes itself.</b></div></div>
+
+</div>
+</body>
+</html>
