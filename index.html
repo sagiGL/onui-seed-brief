@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>onUI — Investor Brief</title>
+<title>onUI Investor Brief</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -18,6 +18,7 @@
     font-size:14px;line-height:1.55;letter-spacing:-.01em;padding:52px 20px 64px;-webkit-font-smoothing:antialiased}
   .wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
 
   .panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:30px 32px;box-shadow:var(--shadow);
     opacity:0;transform:translateY(10px);animation:rise .55s cubic-bezier(.2,.7,.3,1) forwards}
@@ -34,14 +35,14 @@
   .pill{font-size:11px;font-weight:700;color:var(--ink);background:#EAECEF;padding:5px 13px;border-radius:20px}
 
   .hero{background:linear-gradient(165deg,#fff 0%,var(--accent-light) 130%);border-color:rgba(224,83,117,.22)}
-  .hero h1{font-size:31px;font-weight:800;line-height:1.2;color:var(--ink);letter-spacing:-.03em;max-width:20ch}
+  .hero h1{font-size:36px;font-weight:800;line-height:1.12;color:var(--ink);letter-spacing:-.035em}
   .hero h1 em{font-style:normal;color:var(--accent)}
-  .hero p{font-size:15.5px;color:var(--body);line-height:1.55;margin-top:15px;max-width:56ch}
+  .hero p{font-size:16.5px;color:var(--body);line-height:1.5;margin-top:16px}
   .hero p b{color:var(--ink);font-weight:600}
 
   .one-line{font-size:15px;color:var(--ink);line-height:1.5;margin-bottom:4px}
   .one-line b{color:var(--accent);font-weight:600}
-  .body-line{font-size:13.5px;color:var(--muted);line-height:1.55;margin-top:9px;max-width:74ch}
+  .body-line{font-size:13.5px;color:var(--muted);line-height:1.55;margin-top:9px}
   .body-line b{color:var(--ink);font-weight:600}
   .sol-chips{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
   .sol-chip{flex:1;min-width:170px;background:var(--accent-light);border:1px solid rgba(224,83,117,.22);border-radius:10px;padding:12px 14px;font-size:12px;color:var(--body);line-height:1.4}
@@ -98,34 +99,23 @@
   .caps{display:flex;margin-top:12px;font-size:9.5px;font-weight:800;letter-spacing:.03em;color:var(--muted);text-transform:uppercase}
   .cap{text-align:center}.cap.dark{color:var(--ink)}.sp{flex:1}
 
-  /* ---- DIAGRAM 2: data stays (card-based, same vocabulary as the others) ---- */
-  .dz{display:flex;align-items:stretch;margin-top:18px}
-  .dz-walls{flex:1;min-width:0;background:#FAFBFC;border:1px solid var(--border);
-    border-right:2px dashed rgba(224,83,117,.5);border-radius:12px 0 0 12px;padding:16px 18px}
-  .dz-wl{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
-  .dz-row{display:flex;align-items:center;gap:10px}
-  .dz-pill{flex-shrink:0;background:var(--accent-light);border:2px solid var(--accent);border-radius:30px;
-    padding:0 15px;height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
-  .dz-pill b{font-size:13px;font-weight:900;color:var(--accent);letter-spacing:-.02em}
-  .dz-pill span{font-size:7px;font-weight:800;color:var(--accent-deep);text-transform:uppercase;letter-spacing:.05em}
-  .dz-arrow{flex-shrink:0;width:30px;height:24px}
-  .dz-map{flex:1;min-width:0;background:#fff;border:1px solid var(--border);border-radius:9px;padding:8px 10px 4px}
-  .dz-map .h{font-size:8px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:2px}
-  .dz-map svg{width:100%;height:72px;display:block}
-  .dz-data{display:flex;align-items:center;gap:9px;margin-top:11px;padding:9px 12px;background:#fff;border:1px solid var(--border);border-radius:9px}
-  .dz-data .ic{width:18px;height:18px;flex-shrink:0;stroke:var(--accent);fill:none;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-  .dz-data .t{font-size:11.5px;font-weight:700;color:var(--ink)}
-  .dz-data .s{font-size:10.5px;color:var(--muted);margin-left:2px}
-  .dz-data .stay{margin-left:auto;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--accent);background:var(--accent-light);padding:4px 9px;border-radius:5px}
-  .dz-cross{flex-shrink:0;width:152px;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:0 8px}
-  .dz-seg .l{height:18px}.dz-seg .l svg{width:100%;height:100%;display:block}
-  .dz-seg .c{font-size:9px;font-weight:700;line-height:1.25;text-align:center;margin-top:3px}
-  .dz-seg .c.yes{color:var(--accent-deep)}.dz-seg .c.no{color:var(--faint)}
-  .dz-model{flex-shrink:0;width:130px;background:var(--ink-panel);border-radius:0 12px 12px 0;padding:18px 16px;
-    display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:3px}
-  .dz-model .t{font-size:13.5px;font-weight:800;color:#fff}
-  .dz-model .s{font-size:10px;color:#9AA0A8;line-height:1.4}
-  .dz-model .tag2{margin-top:7px;font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#F19BB1}
+  /* ---- DIAGRAM 2: data stays (simple, stacks cleanly) ---- */
+  .dz{display:flex;align-items:stretch;gap:14px;margin-top:18px}
+  .dz-card{flex:1;min-width:0;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;justify-content:center}
+  .dz-in{background:#FAFBFC;border:1px solid var(--border)}
+  .dz-out{background:var(--ink-panel)}
+  .dz-cap{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+  .dz-in .dz-cap{color:var(--muted)}
+  .dz-out .dz-cap{color:#F19BB1}
+  .dz-row2{display:flex;align-items:center;gap:13px}
+  .dz-lock{width:42px;height:42px;flex-shrink:0;border-radius:11px;background:var(--accent-light);border:1px solid rgba(224,83,117,.3);display:flex;align-items:center;justify-content:center}
+  .dz-lock svg{width:21px;height:21px;stroke:var(--accent);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .dz-t{font-size:15px;font-weight:800;color:var(--ink);line-height:1.2}
+  .dz-s{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.45}
+  .dz-out .dz-t{color:#fff}.dz-out .dz-s{color:#9AA0A8}
+  .dz-mid{flex:0 0 124px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center}
+  .dz-mid .ar{width:100%;height:20px}
+  .dz-mid .l{font-size:10px;font-weight:800;color:var(--accent-deep);text-transform:uppercase;letter-spacing:.04em;line-height:1.35}
 
   /* ---- DIAGRAM 3: persona fan ---- */
   .fan-src{display:flex;flex-direction:column;align-items:center;margin-top:20px}
@@ -153,10 +143,9 @@
   .b-poc{color:#fff;background:var(--accent)}.b-talk{color:var(--accent-deep);background:var(--accent-light)}.b-pipe{color:var(--muted);background:#EAECEF}
   .deal-m{font-size:11.5px;color:var(--muted);line-height:1.4}
 
-  .facts{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .fact .n{font-size:25px;font-weight:900;letter-spacing:-.03em;color:var(--ink);line-height:1.1}
-  .fact .l{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;margin:6px 0 5px}
-  .fact .d{font-size:11.5px;color:var(--muted);line-height:1.45}
+  .mq{font-size:34px;font-weight:900;letter-spacing:-.04em;color:var(--ink);line-height:1.06}
+  .ml{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin:9px 0 12px}
+  .md{font-size:13px;color:var(--muted);line-height:1.5}
 
   .team{display:flex;gap:26px;flex-wrap:wrap}
   .tmember .tn{font-size:13.5px;font-weight:800;color:var(--ink)}
@@ -174,16 +163,15 @@
 
   @media(max-width:780px){
     body{padding:34px 14px 48px}.panel{padding:24px}
-    .grid-2,.deals,.facts{grid-template-columns:1fr}
+    .grid-2,.grid-3,.deals{grid-template-columns:1fr}
     .pipe{flex-direction:column}
     .conn,.caps{display:none!important}
     .app,.grid9,.screen{width:100%;max-width:230px}
     .brain .b{width:130px;height:54px;border-radius:30px}
     .fan-grid{grid-template-columns:1fr 1fr}.fan-lines{display:none}
-    .dz{flex-direction:column}
-    .dz-walls{border-right:1px solid var(--border);border-bottom:2px dashed rgba(224,83,117,.5);border-radius:12px 12px 0 0}
-    .dz-cross{width:100%;flex-direction:row;gap:18px;padding:14px 6px}.dz-seg{flex:1}
-    .dz-model{width:100%;border-radius:0 0 12px 12px}
+    .dz{flex-direction:column;gap:10px}
+    .dz-mid{flex:auto;width:100%;padding:2px 0}
+    .dz-mid .ar{display:none}
     .m-cap{display:block;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--ink);text-align:center;margin-bottom:7px}
     .m-cap.muted{color:var(--muted)}
     .m-conn{display:block;width:2px;height:24px;margin:5px 0;
@@ -202,23 +190,23 @@
 
   <!-- HERO -->
   <div class="panel hero">
-    <span class="tag">UI for systems that can't move to the cloud</span>
-    <h1>Any screen, on the backend you already have <em>your data never leaves.</em></h1>
-    <p>onUI installs as <b>one SDK</b> and turns your existing product into building blocks. It reads what each user needs and assembles the right screen for them <b>live, no code, nothing migrated.</b> Built for the teams cloud tools lock out: security, health, finance.</p>
+    <span class="tag">The future of software</span>
+    <h1>Every product, rebuilt around the person using it, <em>the moment they arrive.</em></h1>
+    <p>onUI makes any software adapt itself to each user: the right screen, the right data, the right next step, generated on the spot. <b>The product stays. The experience becomes personal.</b></p>
   </div>
 
   <!-- PROBLEM -->
   <div class="panel">
     <span class="tag">The Problem</span>
-    <div class="one-line">Shipping UI is the bottleneck. <b>Every new screen, report, or per-customer view waits weeks in an engineering queue.</b></div>
-    <div class="body-line">The modern tools that make this instant cloud CMSs and AI app builders only work if your data and backend live in <b>their</b> cloud. That rules out the teams moving the most sensitive data: security, health, finance, and serious B2B products. The companies that most need to move fast are the ones still building every screen by hand.</div>
+    <div class="one-line">Software shows everyone the same thing. <b>Making it fit one person takes engineers weeks.</b></div>
+    <div class="body-line">A new screen, a new report, a view for a single customer. Each one waits in a queue. So products stay generic, users drown in everything that isn't for them, and the teams with the richest data can't use the easy cloud tools, because their data can't leave the building.</div>
   </div>
 
   <!-- SOLUTION / HOW IT WORKS -->
   <div class="panel">
     <span class="tag">The Solution</span>
-    <div class="one-line">Install once. <b>onUI maps your product into blocks, reads each user, and builds the screen they need.</b></div>
-    <div class="body-line">onUI is one SDK you add to your own app. It reads your existing product every screen, API, and data model and turns it into reusable building blocks. From then on anyone can ask, in plain language, for a new dashboard, report, or per-customer view, and onUI builds it from those blocks and places it <b>live in the product</b> editing existing pages or creating new ones, with no extra code and no deploy. Because the agent runs inside your product and is fit to your system, what it builds actually works with your real data and permissions.</div>
+    <div class="one-line">Install onUI once. <b>Then your product rebuilds itself for each user, instantly.</b></div>
+    <div class="body-line">onUI learns your whole product, then assembles the screens, data, and actions each person needs the moment they show up, with no code and no waiting. What used to take an engineering team and weeks now happens on its own, live, for every user.</div>
 
     <div class="diag">
       <div class="pipe">
@@ -329,90 +317,15 @@
     </div>
 
     <div class="sol-chips">
-      <div class="sol-chip"><b>Edit, not just generate</b>onUI changes your existing pages not only spins up new ones from a blank prompt.</div>
-      <div class="sol-chip"><b>Any backend, nothing migrates</b>Works on the system you already run. No re-platforming, no lock-in.</div>
-      <div class="sol-chip"><b>Live at runtime</b>Screens render the moment they're built no extra code, no deploy, no release cycle.</div>
-    </div>
-  </div>
-
-  <!-- WHY THE AGENT IS DIFFERENT / DATA NEVER LEAVES -->
-  <div class="panel">
-    <span class="tag">Why our agent is different and why regulated buyers say yes</span>
-    <div class="one-line">onUI reasons over a live <b>map of your system</b> entities, actions, schema. The model sees the map, never your data.</div>
-
-    <div class="dz">
-
-      <!-- inside your walls -->
-      <div class="dz-walls">
-        <div class="dz-wl">Inside your walls · on-prem or your cloud</div>
-        <div class="dz-row">
-          <div class="dz-pill"><b>onUI</b><span>reasons over</span></div>
-          <svg class="dz-arrow" viewBox="0 0 30 24" preserveAspectRatio="none">
-            <path class="anim" d="M0 12 H24" stroke="var(--accent)" stroke-width="1.4"/>
-            <path d="M22 7 l6 5 l-6 5" fill="none" stroke="var(--accent)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <div class="dz-map">
-            <div class="h">Map of your system</div>
-            <svg viewBox="0 0 230 72" preserveAspectRatio="xMidYMid meet">
-              <!-- links -->
-              <g opacity="0.8">
-                <path class="anim" d="M115 36 L33 13" stroke="var(--accent)" stroke-width="1.1"/>
-                <path class="anim" style="animation-delay:-.3s" d="M115 36 L197 13" stroke="var(--accent)" stroke-width="1.1"/>
-                <path class="anim" style="animation-delay:-.6s" d="M115 36 L33 59" stroke="var(--accent)" stroke-width="1.1"/>
-                <path class="anim" style="animation-delay:-.9s" d="M115 36 L197 59" stroke="var(--accent)" stroke-width="1.1"/>
-              </g>
-              <!-- hub -->
-              <rect x="92" y="27" width="46" height="18" rx="6" fill="#FDF2F4" stroke="var(--accent)" stroke-width="1.4"/>
-              <text x="115" y="39" font-size="8.5" font-weight="800" fill="#C13D5E" text-anchor="middle" font-family="Inter,sans-serif">Schema</text>
-              <!-- satellite entities -->
-              <g font-family="Inter,sans-serif" font-size="8" font-weight="700" text-anchor="middle">
-                <rect x="6" y="5" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="33" y="16.5" fill="#62686F">Users</text>
-                <rect x="170" y="5" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="197" y="16.5" fill="#62686F">Orders</text>
-                <rect x="6" y="50" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="33" y="61.5" fill="#62686F">Records</text>
-                <rect x="170" y="50" width="54" height="17" rx="5" fill="#fff" stroke="#D8DCE1"/><text x="197" y="61.5" fill="#62686F">Reports</text>
-              </g>
-            </svg>
-          </div>
-        </div>
-        <div class="dz-data">
-          <svg class="ic" viewBox="0 0 16 16"><ellipse cx="8" cy="4" rx="4.5" ry="1.8"/><path d="M3.5 4 V12 C3.5 13 5.5 13.8 8 13.8 C10.5 13.8 12.5 13 12.5 12 V4"/><path d="M3.5 8 C3.5 9 5.5 9.8 8 9.8 C10.5 9.8 12.5 9 12.5 8"/></svg>
-          <span class="t">Your data</span><span class="s">records · PII · content</span>
-          <span class="stay">never leaves</span>
-        </div>
-      </div>
-
-      <!-- what crosses the wall -->
-      <div class="dz-cross">
-        <div class="dz-seg">
-          <div class="l"><svg viewBox="0 0 150 18" preserveAspectRatio="none">
-            <path class="anim" d="M0 9 H140" stroke="var(--accent)" stroke-width="1.5"/>
-            <path d="M138 4 l6 5 l-6 5" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg></div>
-          <div class="c yes">schema · structure ·<br>how data is used</div>
-        </div>
-        <div class="dz-seg">
-          <div class="l"><svg viewBox="0 0 150 18" preserveAspectRatio="none">
-            <line x1="0" y1="9" x2="58" y2="9" stroke="#C9CDD2" stroke-width="1.5"/>
-            <circle cx="73" cy="9" r="9" fill="none" stroke="#C9CDD2" stroke-width="1.5"/>
-            <line x1="67" y1="3" x2="79" y2="15" stroke="#C9CDD2" stroke-width="1.5"/>
-          </svg></div>
-          <div class="c no">raw data<br>never crosses</div>
-        </div>
-      </div>
-
-      <!-- the model -->
-      <div class="dz-model">
-        <div class="t">The model</div>
-        <div class="s">your LLM, self-hosted<br>or ours</div>
-        <div class="tag2">sees shape, not data</div>
-      </div>
-
+      <div class="sol-chip"><b>It edits, not just creates</b>Reshapes the product you already have, not just blank new screens.</div>
+      <div class="sol-chip"><b>Works on anything</b>Drops onto the software you already run. No rebuild, no lock-in.</div>
+      <div class="sol-chip"><b>Instant</b>Screens appear the moment they're needed. No deploy, no release cycle.</div>
     </div>
   </div>
 
   <!-- ONE PRODUCT, EVERY ROLE -->
   <div class="panel">
-    <span class="tag">The payoff — one product, an experience per role</span>
+    <span class="tag">The payoff: one product becomes everyone's perfect fit</span>
     <div class="fan-src"><div class="fan-pill">Same blocks</div></div>
     <svg class="fan-lines" viewBox="0 0 100 34" preserveAspectRatio="none">
       <path class="anim" d="M50 0 L12.5 34" stroke="var(--accent)" stroke-width="1.3" opacity=".45" vector-effect="non-scaling-stroke"/>
@@ -443,35 +356,86 @@
         <div class="pav"><svg viewBox="0 0 16 16"><path d="M8 2.5 L12.5 4 V8 C12.5 10.8 10.5 12.8 8 13.5 C5.5 12.8 3.5 10.8 3.5 8 V4 Z"/><path d="M6 8 L7.4 9.4 L10 6.5"/></svg></div>
         <div class="pname">Security lead</div>
         <div class="pmini"><span class="pcell"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell on"></span><span class="pcell"></span><span class="pcell"></span><span class="pcell on"></span><span class="pcell on"></span><span class="pcell on"></span></div>
-        <div class="pchip">Acces.s · Records · Charts</div>
+        <div class="pchip">Access · Records · Charts</div>
       </div>
     </div>
+  </div>
+
+  <!-- WHY THE AGENT IS DIFFERENT / DATA NEVER LEAVES -->
+  <div class="panel">
+    <span class="tag">Why we win, and why it compounds</span>
+    <div class="one-line">We start where no one else can: <b>products whose data can't leave the building.</b> Their data stays home. Only the patterns leave.</div>
+
+    <div class="dz">
+
+      <!-- inside your walls -->
+      <div class="dz-card dz-in">
+        <div class="dz-cap">Inside your walls</div>
+        <div class="dz-row2">
+          <div class="dz-lock"><svg viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11 V8 a4 4 0 0 1 8 0 V11"/></svg></div>
+          <div>
+            <div class="dz-t">Your data stays</div>
+            <div class="dz-s">records, files, content. It never leaves.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- only patterns cross -->
+      <div class="dz-mid">
+        <svg class="ar" viewBox="0 0 110 20" preserveAspectRatio="none">
+          <path class="anim" d="M2 10 H96" stroke="var(--accent)" stroke-width="1.6"/>
+          <path d="M94 5 l7 5 l-7 5" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="l">only the patterns leave</div>
+      </div>
+
+      <!-- what the model sees -->
+      <div class="dz-card dz-out">
+        <div class="dz-cap">What the model sees</div>
+        <div>
+          <div class="dz-t">The shape, not the data</div>
+          <div class="dz-s">It learns how your data is used, never the data itself. Your model, self-hosted or ours.</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="body-line">And every screen onUI builds teaches it what people actually need to see. That compounds across every customer, into the first real intent layer for software. <b>The endgame: products that show people what they need before they ask.</b></div>
   </div>
 
   <!-- WHY NOW -->
   <div class="panel">
     <span class="tag">Why Now</span>
-    <div class="one-line">Users now expect software to behave like the AI tools they use every day <b>generate what I need, adapt to me, instantly.</b></div>
-    <div class="body-line">After ChatGPT and a wave of build-an-app-in-a-prompt tools, static one-size-fits-all screens feel broken. Buyers feel it from both sides: their users demand tailored, on-demand interfaces, and their own teams expect to ship them in minutes, not sprints. That expectation is now universal but the products holding the most valuable data are the ones that <b>can't</b> reach for a cloud tool to meet it. onUI brings the generate-on-demand experience to exactly those products, and every screen it builds teaches it what each role needs next.</div>
+    <div class="one-line">ChatGPT changed what people expect. <b>They've felt software give them exactly what they need, instantly, and now they want it everywhere.</b></div>
+    <div class="body-line">Static, one-size-fits-all products suddenly feel broken. Every company now needs to deliver this. But the ones with the most valuable data can't hand it to a cloud tool to get it. onUI is how they finally can.</div>
   </div>
 
   <!-- TRACTION -->
   <div class="panel">
-    <span class="tag grey">Traction — design partners &amp; active pilots · pre-revenue, intent to pay</span>
+    <span class="tag grey">Traction: the partners are already lining up. Pre-revenue, intent to pay</span>
     <div class="deals">
-      <div class="deal"><div class="deal-h"><span class="deal-c">Pentera</span><span class="deal-b b-poc">Active POC</span></div><div class="deal-m">Cybersecurity shipping UI past a heavy release cycle, on-prem.</div></div>
+      <div class="deal"><div class="deal-h"><span class="deal-c">Pentera</span><span class="deal-b b-poc">Active POC</span></div><div class="deal-m">Cybersecurity. Shipping UI past a heavy release cycle, on-prem.</div></div>
       <div class="deal"><div class="deal-h"><span class="deal-c">Sheba Hospital</span><span class="deal-b b-talk">In discussion</span></div><div class="deal-m">Secure reports for researchers, without exposing patient data.</div></div>
       <div class="deal"><div class="deal-h"><span class="deal-c">AT&amp;T</span><span class="deal-b b-pipe">Exploration</span></div><div class="deal-m">Reuse internal components, cut token waste, feed-driven UI.</div></div>
       <div class="deal"><div class="deal-h"><span class="deal-c">Binat + inbound</span><span class="deal-b b-pipe">Pipeline</span></div><div class="deal-m">Integrator + inbound SaaS, integrators &amp; agencies.</div></div>
     </div>
   </div>
 
-  <!-- FACTS -->
-  <div class="panel">
-    <div class="facts">
-      <div class="fact"><div class="n">$10–100M ARR</div><div class="l">Who we sell to</div><div class="d">Growth-stage software teams in data-sensitive verticals, security, health, fintech, serious B2B.</div></div>
-      <div class="fact"><div class="n">~$30K+ / yr</div><div class="l">Land price · expands by seats &amp; tenants</div><div class="d">Annual SaaS per deployment; on-prem tier available.</div></div>
-      <div class="fact"><div class="n">One install</div><div class="l">10–30 minutes</div><div class="d">Add the SDK once, then edit forever, no migration, no lock-in.</div></div>
+  <!-- MARKET -->
+  <div class="grid-3">
+    <div class="panel">
+      <div class="mq">$30B+</div>
+      <div class="ml">Total Addressable Market</div>
+      <div class="md">Low-code and no-code platforms: building software without an engineering queue. Past $100B by 2030. (Gartner, 2026)</div>
+    </div>
+    <div class="panel">
+      <div class="mq">~$10B</div>
+      <div class="ml">Serviceable Available Market</div>
+      <div class="md">The data-sensitive slice: security, health, finance, and serious B2B that can't put their stack in a cloud tool.</div>
+    </div>
+    <div class="panel">
+      <div class="mq">~$300M</div>
+      <div class="ml">Serviceable Obtainable Market</div>
+      <div class="md">Growth-stage teams, $10-100M ARR, in those verticals. The wedge we win first, then expand from.</div>
     </div>
   </div>
 
@@ -486,11 +450,11 @@
 
   <!-- CTA -->
   <div class="panel cta">
-    <div><div class="big">Book a 2-week pilot on your own stack.</div><div class="small">One SDK, your backend, your LLM, your walls.</div></div>
-    <a href="https://onui.ai">Book a pilot →</a>
+    <div><div class="big">We're raising to make every product adaptive.</div><div class="small">Join us in building the intent layer for software.</div></div>
+    <a href="https://onui.ai">Let's talk →</a>
   </div>
 
-  <div class="foot"><div>onui.ai</div><div>The backend stays. The data stays. <b>The UI writes itself.</b></div></div>
+  <div class="foot"><div>onui.ai</div><div>The product stays. <b>The experience becomes personal.</b></div></div>
 
 </div>
 </body>
