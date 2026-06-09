@@ -19,6 +19,7 @@
   .wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid-46{display:grid;grid-template-columns:2fr 3fr;gap:18px;align-items:start}
 
   .panel{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:30px 32px;box-shadow:var(--shadow);
     opacity:0;transform:translateY(10px);animation:rise .55s cubic-bezier(.2,.7,.3,1) forwards}
@@ -135,7 +136,7 @@
   .pchip{font-size:9.5px;font-weight:700;color:var(--muted);text-align:center;line-height:1.4}
 
   /* ---- traction / facts ---- */
-  .deals{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .deals{display:flex;flex-direction:column;gap:10px}
   .deal{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:13px 14px}
   .deal-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
   .deal-c{font-size:13.5px;font-weight:800;color:var(--ink)}
@@ -147,7 +148,7 @@
   .ml{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;margin:9px 0 12px}
   .md{font-size:13px;color:var(--muted);line-height:1.5}
 
-  .team{display:flex;gap:26px;flex-wrap:wrap}
+  .team{display:flex;flex-direction:column;gap:18px}
   .tmember .tn{font-size:13.5px;font-weight:800;color:var(--ink)}
   .tmember .tr{font-size:10px;font-weight:800;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;margin:1px 0 3px}
   .tmember .tb{font-size:11.5px;color:var(--muted);line-height:1.4;max-width:24ch}
@@ -163,7 +164,7 @@
 
   @media(max-width:780px){
     body{padding:34px 14px 48px}.panel{padding:24px}
-    .grid-2,.grid-3,.deals{grid-template-columns:1fr}
+    .grid-2,.grid-3,.grid-46{grid-template-columns:1fr}
     .pipe{flex-direction:column}
     .conn,.caps{display:none!important}
     .app,.grid9,.screen{width:100%;max-width:230px}
@@ -409,17 +410,6 @@
     <div class="body-line">Static, one-size-fits-all products suddenly feel broken. Every company now needs to deliver this. But the ones with the most valuable data can't hand it to a cloud tool to get it. onUI is how they finally can.</div>
   </div>
 
-  <!-- TRACTION -->
-  <div class="panel">
-    <span class="tag grey">Traction: the partners are already lining up. Pre-revenue, intent to pay</span>
-    <div class="deals">
-      <div class="deal"><div class="deal-h"><span class="deal-c">Pentera</span><span class="deal-b b-poc">Active POC</span></div><div class="deal-m">Cybersecurity. Shipping UI past a heavy release cycle, on-prem.</div></div>
-      <div class="deal"><div class="deal-h"><span class="deal-c">Sheba Hospital</span><span class="deal-b b-talk">In discussion</span></div><div class="deal-m">Secure reports for researchers, without exposing patient data.</div></div>
-      <div class="deal"><div class="deal-h"><span class="deal-c">AT&amp;T</span><span class="deal-b b-pipe">Exploration</span></div><div class="deal-m">Reuse internal components, cut token waste, feed-driven UI.</div></div>
-      <div class="deal"><div class="deal-h"><span class="deal-c">Binat + inbound</span><span class="deal-b b-pipe">Pipeline</span></div><div class="deal-m">Integrator + inbound SaaS, integrators &amp; agencies.</div></div>
-    </div>
-  </div>
-
   <!-- MARKET -->
   <div class="grid-3">
     <div class="panel">
@@ -439,12 +429,23 @@
     </div>
   </div>
 
-  <!-- TEAM -->
-  <div class="panel">
-    <span class="tag">Team</span>
-    <div class="team">
-      <div class="tmember"><div class="tn">Sagi Gleizer</div><div class="tr">CEO</div><div class="tb">Principal SE, F5 &amp; brandlight.ai. Owns product &amp; architecture.</div></div>
-      <div class="tmember"><div class="tn">Itay Mendelawy</div><div class="tr">CBO</div><div class="tb">VP Product at Bit; BlazeMeter (exited to CA, $100M). GTM.</div></div>
+  <!-- TEAM + TRACTION -->
+  <div class="grid-46">
+    <div class="panel">
+      <span class="tag">Team</span>
+      <div class="team">
+        <div class="tmember"><div class="tn">Sagi Gleizer</div><div class="tr">CEO</div><div class="tb">Principal SE, F5 &amp; brandlight.ai. Owns product &amp; architecture.</div></div>
+        <div class="tmember"><div class="tn">Itay Mendelawy</div><div class="tr">CBO</div><div class="tb">VP Product at Bit; BlazeMeter (exited to CA, $100M). GTM.</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <span class="tag grey">Early traction. Pre-revenue, intent to pay</span>
+      <div class="deals">
+        <div class="deal"><div class="deal-h"><span class="deal-c">Pentera</span><span class="deal-b b-poc">Active POC</span></div><div class="deal-m">Cybersecurity. Shipping UI past a heavy release cycle, on-prem.</div></div>
+        <div class="deal"><div class="deal-h"><span class="deal-c">Sheba Hospital</span><span class="deal-b b-talk">In discussion</span></div><div class="deal-m">Secure reports for researchers, without exposing patient data.</div></div>
+        <div class="deal"><div class="deal-h"><span class="deal-c">AT&amp;T</span><span class="deal-b b-pipe">Exploration</span></div><div class="deal-m">Reuse internal components, cut token waste, feed-driven UI.</div></div>
+        <div class="deal"><div class="deal-h"><span class="deal-c">Binat + inbound</span><span class="deal-b b-pipe">Pipeline</span></div><div class="deal-m">Integrator, plus inbound SaaS, integrators and agencies on the waitlist.</div></div>
+      </div>
     </div>
   </div>
 
